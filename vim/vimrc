@@ -1,0 +1,389 @@
+" Don't try to be vi compatible
+set nocompatible
+
+" Helps force plugins to load correctly when it is turned back on below
+filetype off
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'tomasr/molokai'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh'  }
+" if isdirectory('/usr/local/opt/fzf')
+"     Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+" else
+"     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+"     Plug 'junegunn/fzf.vim'
+" endif
+Plug 'Raimondi/delimitMate'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'wakatime/vim-wakatime'
+
+" session
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+
+Plug 'easymotion/vim-easymotion'
+Plug 'mbbill/undotree'
+
+Plug 'w0rp/ale'
+
+Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'mattn/emmet-vim'
+
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'godlygeek/tabular'
+Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'text'] }
+Plug 'junegunn/limelight.vim', { 'for': ['markdown', 'text'] }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+
+Plug 'Shougo/deol.nvim'
+
+Plug 'tpope/vim-surround'
+
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+Plug 'majutsushi/tagbar'
+
+Plug 'airblade/vim-gitgutter'
+
+Plug 'ap/vim-css-color'
+
+Plug 'iamcco/markdown-preview.vim'
+
+call plug#end()
+
+" For plugins to load correctly
+filetype plugin indent on
+
+" leader key
+let mapleader = ","
+
+" disable visualbell
+set noerrorbells visualbell t_vb=
+
+" Show line numbers
+set number
+
+" Show file stats
+set ruler
+
+" encoding
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+
+" fix backspace indent
+set backspace=indent,eol,start
+
+" Rendering
+set ttyfast
+
+" disable the blinking cursor
+set gcr=a:blinkon0
+set scrolloff=3
+
+" status bar
+set laststatus=2
+
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+
+" enable hidden buffers
+set hidden
+
+" searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" syntax
+syntax on
+
+colorscheme gruvbox
+set background=dark
+set t_Co=256
+
+"" no one is really happy until you have this shortcuts
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
+
+if !exists('*s:setupWrapping')
+    function s:setupWrapping()
+        set wm=2
+        set textwidth=79
+        set wrap linebreak nolist
+    endfunction
+endif
+
+"" Remember cursor position
+augroup vimrc-remember-cursor-position
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+"" txt
+augroup vimrc-wrapping
+    autocmd!
+    autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+    autocmd FileType text,markdown call s:setupWrapping()
+augroup END
+
+" whitespace, tabs
+set tabstop=4
+set softtabstop=0
+set shiftwidth=4
+set expandtab
+set nowrap
+
+
+"" Switching windows
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+
+"" Vmap for maintain Visual Mode after shifting > and <
+vmap < <gv
+vmap > >gv
+
+"" close buffer
+noremap <leader>c :bd<CR>
+
+"" clean search (highlight)
+nnoremap <silent> <leader><space> :noh<cr>
+
+" buffer nav
+noremap <leader>q :bp<CR>
+noremap <leader>w :bn<CR>
+
+" switch windows
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+
+" backup
+set backupcopy=yes
+set backup
+set swapfile
+
+function! InitializeDirectories()
+    let parent = $HOME
+    let prefix = 'vim'
+    let dir_list = {
+                \ 'backup': 'backupdir',
+                \ 'views': 'viewdir',
+                \ 'swap': 'directory' }
+    if has('persistent_undo')
+        let dir_list['undo'] = 'undodir'
+    endif
+    let common_dir = parent . '/.' . prefix
+    for [dirname, settingname] in items(dir_list)
+        let directory = common_dir . dirname . '/'
+        if exists("*mkdir")
+            if !isdirectory(directory)
+                call mkdir(directory)
+            endif
+        endif
+        if !isdirectory(directory)
+            echo "Warning: Unable to create backup directory: " . directory
+            echo "Try: mkdir -p " . directory
+        else
+            let directory = substitute(directory, " ", "\\\\ ", "g")
+            exec "set " . settingname . "=" . directory
+        endif
+    endfor
+endfunction
+call InitializeDirectories()
+
+if !exists('*s:setupWrapping')
+    function s:setupWrapping()
+        set wrap
+        set wm=2
+        set textwidth=79
+    endfunction
+endif
+
+
+if has('persistent_undo')
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+endif
+
+autocmd FileType javascript,html,yml setlocal ts=2 sts=2 sw=2
+
+" 在当前文件所在目录，创建新文件
+nnoremap <Leader>ne :e <C-R>=expand('%:p:h') . '/'<CR>
+" 在当前文件所在目录，创建新文件,并且补上当前光标所在的单词作为文件名
+nnoremap <Leader>nn :e <C-R>=expand('%:p:h') . '/' . expand('<cword>')<CR>
+
+" snippets
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+"" NERDTree configuration
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+nnoremap <silent> <leader>2 :NERDTreeFind<CR>
+nnoremap <silent> <leader>3 :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | bd | endif
+
+"" delimitMate
+let delimitMate_expand_cr = 2
+let delimitMate_expand_space = 1
+
+"" commentary
+autocmd FileType python,shell set commentstring=#\ %s
+autocmd FileType c,cpp set commentstring=//\ %s
+
+"" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" session management
+let g:session_directory = "~/.vim/session"
+let g:session_autoload = "no"
+let g:session_autosave = "yes"
+let g:session_command_aliases = 1
+
+nnoremap <leader>so :OpenSession<Space>
+nnoremap <leader>ss :SaveSession<Space>
+nnoremap <leader>sd :DeleteSession<CR>
+nnoremap <leader>sc :CloseSession<CR>
+nnoremap <leader>sv :ViewSession<CR>
+
+
+"" Git
+noremap <Leader>ga :Gwrite<CR>
+noremap <Leader>gc :Gcommit<CR>
+noremap <Leader>gsh :Gpush<CR>
+noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
+
+"" undo tree
+nnoremap <Leader>u :UndotreeToggle<CR>
+
+"" indent guideline
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+" leaderf
+" search word under cursor, the pattern is treated as regex, and enter normal mode directly
+noremap <Leader>f :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" search word under cursor, the pattern is treated as regex,
+" append the result to previous search results.
+noremap <C-G> :<C-U><C-R>=printf("Leaderf! rg --append -e %s ", expand("<cword>"))<CR>
+" search word under cursor literally only in current buffer
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR>
+" search visually selected text literally, don't quit LeaderF after accepting an entry
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#visual())<CR>
+" recall last search. If the result window is closed, reopen it.
+noremap go :<C-U>Leaderf! rg --stayOpen --recall<CR>
+nnoremap <silent> <Leader>m :Leaderf mru<CR>
+nnoremap <silent> <leader>b :Leaderf buffer<CR>
+nnoremap <silent> <leader>e :Leaderf file<CR>
+
+" editorconfig-vim
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_conceal = 0
+
+" deol
+nnoremap <silent> <leader>sh :Deol -cwd=%:p:h<CR>
+nnoremap <silent> <leader>sr :Deol<CR>
+
+
+" coc.vim
+set updatetime=300
+set signcolumn=yes
+" use <tab> for trigger completion and navigate to next complete item
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if &filetype == 'vim'
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+
+"jsx
+let g:vim_jsx_pretty_colorful_config = 1
+
+" tagbar
+nnoremap <silent> <leader>4 :TagbarToggle<CR>
+
+" markdown preview
+nmap <silent> <leader>mp <Plug>MarkdownPreview
