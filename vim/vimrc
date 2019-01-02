@@ -70,6 +70,8 @@ Plug 'ap/vim-css-color'
 
 Plug 'iamcco/markdown-preview.vim'
 
+Plug 'kevinhwang91/vim-ibus-sw'
+
 call plug#end()
 
 " For plugins to load correctly
@@ -86,6 +88,9 @@ set number
 
 " Show file stats
 set ruler
+
+" Height of the command bar
+set cmdheight=2
 
 " encoding
 set encoding=utf-8
@@ -128,6 +133,9 @@ colorscheme gruvbox
 set background=dark
 set t_Co=256
 
+set showmatch
+set mat=2
+
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
@@ -167,6 +175,9 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 set nowrap
+set smarttab
+set autoindent
+set smartindent
 
 
 "" Switching windows
@@ -194,6 +205,23 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
+
+command W w !sudo tee "%" > /dev/null
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+" Turn on the Wild menu
+set wildmenu
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
 
 " backup
 set backupcopy=yes
@@ -387,3 +415,6 @@ nnoremap <silent> <leader>4 :TagbarToggle<CR>
 
 " markdown preview
 nmap <silent> <leader>mp <Plug>MarkdownPreview
+
+" ibus
+set ttimeoutlen=100
