@@ -89,9 +89,6 @@ set number
 " Show file stats
 set ruler
 
-" Height of the command bar
-set cmdheight=2
-
 " encoding
 set encoding=utf-8
 set fileencoding=utf-8
