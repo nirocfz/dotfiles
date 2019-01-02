@@ -70,7 +70,9 @@ Plug 'ap/vim-css-color'
 
 Plug 'iamcco/markdown-preview.vim'
 
-Plug 'kevinhwang91/vim-ibus-sw'
+if executable('ibus')
+    Plug 'kevinhwang91/vim-ibus-sw'
+endif
 
 call plug#end()
 
