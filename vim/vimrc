@@ -60,7 +60,7 @@ Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
 
 Plug 'majutsushi/tagbar'
 
@@ -417,3 +417,6 @@ nmap <silent> <leader>mp <Plug>MarkdownPreview
 
 " ibus
 set ttimeoutlen=100
+
+" ale
+let g:ale_fixers = { 'javascript': ['eslint'] }
