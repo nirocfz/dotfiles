@@ -13,7 +13,9 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'tomasr/molokai'
+" Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh'  }
@@ -70,9 +72,9 @@ Plug 'ap/vim-css-color'
 
 Plug 'iamcco/markdown-preview.vim'
 
-if executable('ibus')
-    Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
-endif
+" if executable('ibus')
+"     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
+" endif
 
 call plug#end()
 
@@ -128,9 +130,12 @@ nnoremap N Nzzzv
 " syntax
 syntax on
 
-colorscheme gruvbox
-set background=dark
+set termguicolors
 set t_Co=256
+colorscheme gruvbox
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='hard'
+set background=dark
 
 set showmatch
 set mat=2
@@ -306,8 +311,8 @@ autocmd FileType python,shell set commentstring=#\ %s
 autocmd FileType c,cpp set commentstring=//\ %s
 
 "" airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " session management
 let g:session_directory = "~/.vim/session"
