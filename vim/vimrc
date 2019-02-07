@@ -72,6 +72,10 @@ Plug 'ap/vim-css-color'
 
 Plug 'iamcco/markdown-preview.vim'
 
+Plug 'leafgarland/typescript-vim'
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " if executable('ibus')
 "     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
 " endif
@@ -302,6 +306,9 @@ nnoremap <silent> <leader>2 :NERDTreeFind<CR>
 nnoremap <silent> <leader>3 :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | bd | endif
 
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+
 "" delimitMate
 let delimitMate_expand_cr = 2
 let delimitMate_expand_space = 1
@@ -313,6 +320,8 @@ autocmd FileType c,cpp set commentstring=//\ %s
 "" airline
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_theme='powerlineish'
+let g:bufferline_echo = 0
 
 " session management
 let g:session_directory = "~/.vim/session"

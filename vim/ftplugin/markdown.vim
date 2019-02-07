@@ -11,5 +11,5 @@ let b:delimitMate_expand_cr = 2
 let b:delimitMate_expand_space = 0
 let b:delimitMate_expand_inside_quotes = 1
 
-colorscheme seoul256
-let g:airline_theme = 'zenburn'
+" colorscheme seoul256
+" let g:airline_theme = 'zenburn'
