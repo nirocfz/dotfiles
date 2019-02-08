@@ -431,6 +431,3 @@ nmap <silent> <leader>mp <Plug>MarkdownPreview
 
 " ibus
 set ttimeoutlen=100
-
-" ale
-let g:ale_fixers = { 'javascript': ['eslint'] }
