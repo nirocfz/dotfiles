@@ -15,7 +15,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tomasr/molokai'
 " Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh'  }
@@ -322,10 +321,9 @@ autocmd FileType python,shell set commentstring=#\ %s
 autocmd FileType c,cpp set commentstring=//\ %s
 
 "" airline
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_theme='powerlineish'
-let g:bufferline_echo = 0
 
 " session management
 let g:session_directory = "~/.vim/session"
