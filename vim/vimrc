@@ -73,7 +73,9 @@ Plug 'iamcco/markdown-preview.vim'
 
 Plug 'leafgarland/typescript-vim'
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+if executable('go')
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+endif
 
 " if executable('ibus')
 "     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
