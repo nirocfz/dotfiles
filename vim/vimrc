@@ -57,7 +57,7 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'Shougo/deol.nvim'
 
 Plug 'tpope/vim-surround'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
@@ -138,7 +138,8 @@ syntax on
 
 set termguicolors
 set t_Co=256
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme molokai
 " let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='hard'
 set background=dark
@@ -331,7 +332,7 @@ autocmd FileType c,cpp set commentstring=//\ %s
 "" airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='powerlineish'
+let g:airline_theme='molokai'
 
 " session management
 let g:session_directory = "~/.vim/session"
