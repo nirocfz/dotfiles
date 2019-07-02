@@ -78,6 +78,8 @@ if executable('go')
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 endif
 
+Plug 'mhinz/vim-startify'
+
 " if executable('ibus')
 "     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
 " endif
