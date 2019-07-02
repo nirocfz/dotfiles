@@ -1,5 +1,4 @@
 {
-    "coc.preferences.diagnostic.displayByAle": true,
     "javascript.suggestionActions.enabled": false,
     "tsserver.enableJavascript": false,
     "languageserver": {

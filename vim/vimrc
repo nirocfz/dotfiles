@@ -40,7 +40,7 @@ Plug 'xolox/vim-session'
 Plug 'easymotion/vim-easymotion'
 Plug 'mbbill/undotree'
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -57,10 +57,10 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'Shougo/deol.nvim'
 
 Plug 'tpope/vim-surround'
-" Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
+" Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+" Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
 
@@ -395,6 +395,7 @@ nnoremap <silent> <leader>sr :Deol<CR>
 
 " coc.vim
 set updatetime=300
+set shortmess+=c
 set signcolumn=yes
 " use <tab> for trigger completion and navigate to next complete item
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -410,6 +411,10 @@ inoremap <silent><expr> <TAB>
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -427,6 +432,24 @@ function! s:show_documentation()
         call CocAction('doHover')
     endif
 endfunction
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
