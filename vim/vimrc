@@ -538,6 +538,9 @@ augroup go
 
 augroup END
 
+" startify
+let g:startify_change_to_dir = 0
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
