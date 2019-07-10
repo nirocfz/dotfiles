@@ -40,7 +40,7 @@ Plug 'xolox/vim-session'
 Plug 'easymotion/vim-easymotion'
 Plug 'mbbill/undotree'
 
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -540,6 +540,9 @@ augroup END
 
 " startify
 let g:startify_change_to_dir = 0
+
+" ale
+let g:ale_pattern_options = {'\.js$': {'ale_enabled': 0}, '\.jsx$': {'ale_enabled': 0}}
 
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
