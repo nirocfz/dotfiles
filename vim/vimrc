@@ -317,7 +317,7 @@ let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize = 32
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <leader>2 :NERDTreeFind<CR>
 nnoremap <silent> <leader>3 :NERDTreeToggle<CR>
@@ -379,7 +379,7 @@ noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expan
 xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#visual())<CR>
 " recall last search. If the result window is closed, reopen it.
 noremap go :<C-U>Leaderf! rg --stayOpen --recall<CR>
-nnoremap <silent> <Leader>m :Leaderf mru<CR>
+nnoremap <silent> <leader>m :Leaderf mru<CR>
 nnoremap <silent> <leader>b :Leaderf buffer<CR>
 nnoremap <silent> <leader>e :Leaderf file<CR>
 
@@ -391,7 +391,7 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_conceal = 0
 
 " deol
-nnoremap <silent> <leader>sh :Deol -cwd=%:p:h<CR>
+nnoremap <silent> <leader>sh :Deol -cwd=%:p:h -split<CR>
 nnoremap <silent> <leader>sr :Deol<CR>
 
 
@@ -475,7 +475,7 @@ let g:vim_jsx_pretty_colorful_config = 1
 nnoremap <silent> <leader>4 :TagbarToggle<CR>
 
 " markdown preview
-nmap <silent> <leader>mp <Plug>MarkdownPreview
+autocmd FileType text,markdown nmap <silent> <leader>mp <Plug>MarkdownPreview
 
 " ibus
 set ttimeoutlen=100
