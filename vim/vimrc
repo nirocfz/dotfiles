@@ -64,7 +64,7 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 " Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'majutsushi/tagbar'
 
@@ -75,6 +75,7 @@ Plug 'ap/vim-css-color'
 Plug 'iamcco/markdown-preview.vim'
 
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 
 if executable('go')
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -145,7 +146,7 @@ syntax on
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
+" if (empty($TMUX))
   if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -156,17 +157,17 @@ if (empty($TMUX))
   if (has("termguicolors"))
     set termguicolors
   endif
-endif
+" endif
 
 set t_Co=256
 set background=light
 " colorscheme molokai
-" colorscheme gruvbox
+colorscheme gruvbox
 " let g:gruvbox_italic=1
 " let g:gruvbox_contrast_dark='hard'
 " let g:gruvbox_contrast_light='hard'
 " colorscheme PaperColor
-colorscheme one
+" colorscheme one
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -221,9 +222,9 @@ augroup vimrc-wrapping
 augroup END
 
 " whitespace, tabs
-set tabstop=4
+set tabstop=2
 set softtabstop=0
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 set nowrap
 set smarttab
@@ -579,6 +580,8 @@ augroup END
 " startify
 let g:startify_change_to_dir = 0
 
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
