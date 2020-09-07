@@ -82,6 +82,7 @@ if executable('go')
 endif
 
 Plug 'mhinz/vim-startify'
+Plug 'ryanoasis/vim-devicons'
 
 " if executable('ibus')
 "     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
@@ -160,14 +161,14 @@ syntax on
 " endif
 
 set t_Co=256
-set background=light
+set background=dark
 " colorscheme molokai
 colorscheme gruvbox
 " let g:gruvbox_italic=1
 " let g:gruvbox_contrast_dark='hard'
 " let g:gruvbox_contrast_light='hard'
 " colorscheme PaperColor
-" colorscheme one
+" colorscheme molokai
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -309,13 +310,6 @@ function! InitializeDirectories()
 endfunction
 call InitializeDirectories()
 
-if !exists('*s:setupWrapping')
-    function s:setupWrapping()
-        set wrap
-        set wm=2
-        set textwidth=79
-    endfunction
-endif
 
 
 if has('persistent_undo')
@@ -585,3 +579,32 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+""" markdown limelight goyo
+autocmd FileType text,markdown nmap <Leader>go :Goyo<cr>
+
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+  " ...
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
