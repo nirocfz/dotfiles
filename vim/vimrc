@@ -4,6 +4,8 @@ set nocompatible
 " Helps force plugins to load correctly when it is turned back on below
 filetype off
 
+let g:ale_disable_lsp = 1
+
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -19,7 +21,7 @@ Plug 'tomasr/molokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh'  }
+" Plug 'Yggdroot/LeaderF', { 'do': './install.sh'  }
 " if isdirectory('/usr/local/opt/fzf')
 "     Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " else
@@ -61,10 +63,7 @@ Plug 'Shougo/deol.nvim'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 
-" Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-" Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'majutsushi/tagbar'
 
@@ -83,10 +82,6 @@ endif
 
 Plug 'mhinz/vim-startify'
 Plug 'ryanoasis/vim-devicons'
-
-" if executable('ibus')
-"     Plug 'kevinhwang91/vim-ibus-sw', { 'for': ['markdown', 'text'] }
-" endif
 
 call plug#end()
 
@@ -321,17 +316,20 @@ endif
 autocmd FileType javascript,html,yml,typescript setlocal ts=2 sts=2 sw=2
 
 " 在当前文件所在目录，创建新文件
-nnoremap <Leader>ne :e <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <leader>ne :e <C-R>=expand('%:p:h') . '/'<CR>
 " 在当前文件所在目录，创建新文件,并且补上当前光标所在的单词作为文件名
-nnoremap <Leader>nn :e <C-R>=expand('%:p:h') . '/' . expand('<cword>')<CR>
+nnoremap <leader>nn :e <C-R>=expand('%:p:h') . '/' . expand('<cword>')<CR>
 
-" snippets
+" startify
+let g:startify_change_to_dir = 0
+
+" ultisnips
 let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
-"" NERDTree configuration
+" NERDTree configuration
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
@@ -355,6 +353,7 @@ autocmd FileType c,cpp set commentstring=//\ %s
 "" airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#ale#enabled = 1
 " let g:airline_theme='molokai'
 
 " session management
@@ -371,38 +370,22 @@ nnoremap <leader>sv :ViewSession<CR>
 
 
 "" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
+noremap <leader>ga :Gwrite<CR>
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gsh :Gpush<CR>
+noremap <leader>gll :Gpull<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gb :Gblame<CR>
+noremap <leader>gd :Gvdiff<CR>
+noremap <leader>gr :Gremove<CR>
 
 "" undo tree
-nnoremap <Leader>u :UndotreeToggle<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 "" indent guideline
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
-
-" leaderf
-" search word under cursor, the pattern is treated as regex, and enter normal mode directly
-noremap <Leader>f :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
-" search word under cursor, the pattern is treated as regex,
-" append the result to previous search results.
-noremap <C-G> :<C-U><C-R>=printf("Leaderf! rg --append -e %s ", expand("<cword>"))<CR>
-" search word under cursor literally only in current buffer
-noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR>
-" search visually selected text literally, don't quit LeaderF after accepting an entry
-xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen -e %s ", leaderf#Rg#visual())<CR>
-" recall last search. If the result window is closed, reopen it.
-noremap go :<C-U>Leaderf! rg --stayOpen --recall<CR>
-nnoremap <silent> <leader>m :Leaderf mru<CR>
-nnoremap <silent> <leader>b :Leaderf buffer<CR>
-nnoremap <silent> <leader>e :Leaderf file<CR>
 
 " editorconfig-vim
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -415,94 +398,12 @@ let g:vim_markdown_conceal = 0
 nnoremap <silent> <leader>sh :Deol -cwd=%:p:h -split<CR>
 nnoremap <silent> <leader>sr :Deol<CR>
 
-
-" coc.vim
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-
-"jsx
-let g:vim_jsx_pretty_colorful_config = 1
-
 " tagbar
 nnoremap <silent> <leader>4 :TagbarToggle<CR>
 
 " markdown preview
 autocmd FileType text,markdown nmap <silent> <leader>mp <Plug>MarkdownPreview
 
-" ibus
-set ttimeoutlen=100
-
-
-" go
 " vim-go
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -554,15 +455,15 @@ augroup go
   au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+  au FileType go nmap <leader>dd <Plug>(go-def-vertical)
+  au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
+  au FileType go nmap <leader>db <Plug>(go-doc-browser)
 
   au FileType go nmap <leader>r  <Plug>(go-run)
   au FileType go nmap <leader>t  <Plug>(go-test)
-  au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
+  au FileType go nmap <leader>gt <Plug>(go-coverage-toggle)
+  au FileType go nmap <leader>i <Plug>(go-info)
+  au FileType go nmap <silent> <leader>l <Plug>(go-metalinter)
   au FileType go nmap <C-g> :GoDecls<cr>
   au FileType go nmap <leader>dr :GoDeclsDir<cr>
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
@@ -571,16 +472,8 @@ augroup go
 
 augroup END
 
-" startify
-let g:startify_change_to_dir = 0
-
-
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
-""" markdown limelight goyo
-autocmd FileType text,markdown nmap <Leader>go :Goyo<cr>
+" markdown limelight goyo
+autocmd FileType text,markdown nmap <leader>go :Goyo<cr>
 
 function! s:goyo_enter()
   if executable('tmux') && strlen($TMUX)
@@ -608,3 +501,9 @@ endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+
+" local
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
