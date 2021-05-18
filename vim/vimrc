@@ -30,8 +30,8 @@ Plug 'morhetz/gruvbox'
 " endif
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-" Plug 'Raimondi/delimitMate'
-Plug 'jiangmiao/auto-pairs'
+Plug 'Raimondi/delimitMate'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-commentary'
@@ -47,7 +47,7 @@ Plug 'xolox/vim-session'
 Plug 'easymotion/vim-easymotion'
 Plug 'mbbill/undotree'
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -344,8 +344,8 @@ nnoremap <silent> <leader>3 :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | bd | endif
 
 "" delimitMate
-" let delimitMate_expand_cr = 2
-" let delimitMate_expand_space = 1
+let delimitMate_expand_cr = 2
+let delimitMate_expand_space = 1
 
 "" commentary
 autocmd FileType python,shell set commentstring=#\ %s
@@ -354,6 +354,7 @@ autocmd FileType c,cpp set commentstring=//\ %s
 "" airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#coc#enabled = 1
 " let g:airline#extensions#ale#enabled = 1
 " let g:airline_theme='molokai'
 
@@ -418,6 +419,7 @@ endfunction
 
 let g:go_template_autocreate = 0
 let g:go_fmt_autosave = 0
+let g:go_imports_autosave = 0
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
@@ -524,12 +526,12 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("patch-8.1.1564")
+" if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
+  " set signcolumn=number
+" else
   set signcolumn=yes
-endif
+" endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -588,8 +590,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>fs  <Plug>(coc-format-selected)
+nmap <leader>fs  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -666,6 +668,8 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+let g:coc_global_extensions =  ['coc-yank', 'coc-tabnine', 'coc-prettier', 'coc-highlight', 'coc-eslint', 'coc-yaml', 'coc-xml', 'coc-json', 'coc-tsserver', 'coc-sh', 'coc-markdownlint', 'coc-html', 'coc-css']
 "" end of coc.nvim
 
 "" LeaderF
@@ -701,6 +705,8 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 " noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 " noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
+" auto-pair
+" let g:AutoPairsFlyMode = 0
 
 " local
 if filereadable(expand("~/.vimrc.local"))

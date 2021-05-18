@@ -1,14 +1,16 @@
 {
-  "diagnostic.displayByAle": true,
+  "diagnostic.displayByAle": false,
+  "javascript.suggestionActions.enabled": false,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "wxss.validate": false,
   "languageserver": {
     "golang": {
       "command": "gopls",
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
       "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true,
-        "completeUnimported": true
-      }
+      "disableWorkspaceFolders": true
     }
   }
 }
